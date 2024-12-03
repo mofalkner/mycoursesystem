@@ -9,4 +9,7 @@
 - Es wurde danach ein neues Maven-Programm in IntelliJ erstellt und es wurde der MySQL Connector hinzugefügt.
 
 ### 3. Video:
-- asd
+- Er wurde eine neues Package namens ui erstellt!
+- Eine Klasse namens Cli wurde erstellt!
+- Diese wurde schon ausgearbeitet!
+- 
