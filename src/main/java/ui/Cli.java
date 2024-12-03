@@ -14,7 +14,7 @@ public class Cli
     public void start()
     {
         String input = "-";
-        while (input.equals("x"))
+        while (!input.equals("x"))
         {
             showMenue();
             input = scan.nextLine();
@@ -29,6 +29,9 @@ public class Cli
                 case "x":
                     System.out.println("Auf Wiedersehen!");
                     break;
+                default:
+                    inputError();
+                    break;
             }
         }
         scan.close();
@@ -38,5 +41,10 @@ public class Cli
         System.out.println("---------- KURSMANAGEMENT ----------");
         System.out.println("(1) Kurs eingeben! \t (2) Alle Kurse anzeigen! \t");
         System.out.println("(x) -- ENDE --");
+    }
+
+    public void inputError()
+    {
+        System.out.println("Bitte nur die Zahlen der Menüauswahl eingeben!");
     }
 }
