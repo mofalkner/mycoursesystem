@@ -9,6 +9,11 @@
 - Es wurde danach ein neues Maven-Programm in IntelliJ erstellt und es wurde der MySQL Connector hinzugefügt.
 
 ### 3. Video:
+- Es wurde ein neues Package namens dataacess erstellt!
+- Darin wurde eine neue Methode namens MysqlDatabaseConnection erstellt und ausgearbeitet!
+- In der Main wurde dann die Verbindung zur Datenbank hergestellt!
+
+### 4. Video:
 - Er wurde eine neues Package namens ui erstellt!
 - Eine Klasse namens Cli wurde erstellt!
 - Diese wurde schon ausgearbeitet!
