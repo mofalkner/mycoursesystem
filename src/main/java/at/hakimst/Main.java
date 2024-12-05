@@ -1,7 +1,6 @@
 package at.hakimst;
-import ui.Cli;
-
 import dataaccess.MysqlDatabaseConnection;
+import ui.Cli;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -14,8 +13,7 @@ public class Main {
 
         try
         {
-            Connection myConnection =
-                    MysqlDatabaseConnection.getConnection("jdbc:mysql://localhost:3306/kurssystem","root","");
+            Connection myConnection = MysqlDatabaseConnection.getConnection("jdbc:mysql://localhost:3306/kurssystem","root","");
             System.out.println("Verbindung aufgebaut!");
         }
         catch (ClassNotFoundException e)

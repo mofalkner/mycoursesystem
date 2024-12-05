@@ -18,3 +18,6 @@
 - Eine Klasse namens Cli wurde erstellt!
 - Diese wurde schon ausgearbeitet!
 - Dann wurde sie in der Main ausprobiert!
+
+### 5. Video:
+- 
