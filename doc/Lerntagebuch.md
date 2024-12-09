@@ -20,4 +20,9 @@
 - Dann wurde sie in der Main ausprobiert!
 
 ### 5. Video:
-- 
+- Es wurde ein neues Package namens domain erstellt!
+- Auserdem wurde eine neue Enum-Klasse namens CourseType erstellt!
+- Es wurde eine Course Klasse erstellt!
+- Eine abstrakte Klasse namens BaseEntity wurde auch erstellt!
+- Auch wurde eine Exception namens InvalidValueException erstellt!
+- Danach wurden alle Klassen ausgearbeitet!
