@@ -26,3 +26,8 @@
 - Eine abstrakte Klasse namens BaseEntity wurde auch erstellt!
 - Auch wurde eine Exception namens InvalidValueException erstellt!
 - Danach wurden alle Klassen ausgearbeitet!
+
+### 6. Video:
+- Es wurde in dem Package dataaccess ein neues Interface namens BaseRepository erstellt!
+- Es wurde auch ein neues Interface namens MyCourseRepository erstellt!
+- Danach wurden die beiden Interfaces ausgearbeitet!
