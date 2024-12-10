@@ -10,7 +10,7 @@ public class Course extends BaseEntity {
     private Date endDate;
     private CourseType courseType;
 
-    public Course(Long id, String name, String description, CourseType courseType, Date endDate, Date beginDate, int hours) throws InvalidValueException {
+    public Course(Long id, String name, String description, int hours, java.sql.Date beginDate, java.sql.Date endDate, CourseType courseType) throws InvalidValueException {
         super(id);
         this.setName(name);
         this.setDescription(description);
@@ -20,7 +20,7 @@ public class Course extends BaseEntity {
         this.setCourseType(courseType);
     }
 
-    public Course(String name, String description, CourseType courseType, Date endDate, Date beginDate, int hours) throws InvalidValueException {
+    public Course(String name, String description, int hours, java.sql.Date beginDate, java.sql.Date endDate, CourseType courseType) throws InvalidValueException {
         super(null);
         this.setName(name);
         this.setDescription(description);
@@ -121,7 +121,7 @@ public class Course extends BaseEntity {
     @Override
     public String toString() {
         return "Course{" +
-                "id = xxx" +
+                "id ='" + this.getId() +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", hours=" + hours +
