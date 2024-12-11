@@ -47,3 +47,7 @@
 - Die Klasse Assert wurde dann ausgearbeitet!
 - Auch die Klasse MySqlCourseRepository wurde erweitert!
 - Auch das Menü in der Klasse Cli wurde entsprechend erweitert!
+
+### 9. Video:
+- In der Klasse MySqlCourseRepository wurde die insert Methode implementiert!
+- Auch die Methode AddCourse in der Klasse Cli wurde ausgearbeitet!
