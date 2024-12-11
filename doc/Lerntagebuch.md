@@ -40,3 +40,10 @@
 ### 7. Video Teil 2:
 - Es wurde ein neuer Kurs in PhpMyAdmin erstellt!
 - Es wurde der Klammerungs-Fehler in der Klasse MySqlCourseRepository ausgebessert!
+
+### 8. Video:
+- Es wurde ein neues Package namens util angelegt!
+- Auch wurde eine neue Klasse namens Assert hinzugefügt!
+- Die Klasse Assert wurde dann ausgearbeitet!
+- Auch die Klasse MySqlCourseRepository wurde erweitert!
+- Auch das Menü in der Klasse Cli wurde entsprechend erweitert!
