@@ -21,7 +21,7 @@
 
 ### 5. Video:
 - Es wurde ein neues Package namens domain erstellt!
-- Auserdem wurde eine neue Enum-Klasse namens CourseType erstellt!
+- Außerdem wurde eine neue Enum-Klasse namens CourseType erstellt!
 - Es wurde eine Course Klasse erstellt!
 - Eine abstrakte Klasse namens BaseEntity wurde auch erstellt!
 - Auch wurde eine Exception namens InvalidValueException erstellt!
@@ -36,3 +36,7 @@
 - Es wurde im Package dataaccess eine neue Klasse namens MySqlCourseRepository erstellt!
 - Außerdem wurde eine neue Exception namens DatabaseException erstellt!
 - Danach wurden die Klasse, die Exception und andere Klassen weiter ausgearbeitet!
+
+### 7. Video Teil 2:
+- Es wurde ein neuer Kurs in PhpMyAdmin erstellt!
+- Es wurde der Klammerungs-Fehler in der Klasse MySqlCourseRepository ausgebessert!
