@@ -35,4 +35,4 @@
 ### 7. Video Teil 1:
 - Es wurde im Package dataaccess eine neue Klasse namens MySqlCourseRepository erstellt!
 - Außerdem wurde eine neue Exception namens DatabaseException erstellt!
-- Danach wurde die Klasse, die Exception und andere Klassen weiter ausgearbeitet!
+- Danach wurden die Klasse, die Exception und andere Klassen weiter ausgearbeitet!

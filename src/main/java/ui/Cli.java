@@ -1,5 +1,7 @@
 package ui;
 
+import dataaccess.DatabaseException;
+import dataaccess.MyCourseRepository;
 import domain.Course;
 
 import java.util.List;
@@ -60,9 +62,9 @@ public class Cli
                 System.out.println("Kursliste leer");
             }
         }
-        catch (DatabaseEception databaseEception)
+        catch (DatabaseException databaseException)
         {
-            System.out.println("Datenbankfehler bei Anzeige aller Kurse: " + databaseEception.getMessage());
+            System.out.println("Datenbankfehler bei Anzeige aller Kurse: " + databaseException.getMessage());
         }
         catch (Exception exception)
         {

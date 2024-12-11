@@ -1,8 +1,8 @@
 package at.hakimst;
-import dataaccess.MysqlDatabaseConnection;
+import dataaccess.MySqlCourseRepository;
+
 import ui.Cli;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Main {
