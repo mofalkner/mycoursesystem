@@ -60,3 +60,8 @@
 - Die Methode deleteById wurde implementiert!
 - Es wurde die Methode deleteCourse erstellt und gleich ausgearbeitet!
 - Die Methode UpdateCourseDetails wurde aktualisiert!
+
+### 12. Video:
+- Die Methode findAllCoursesByNameOrDescription wurde implementiert!
+- Es wurde außerdem noch die Methode courseSearch erstellt und auch ausgearbeitet!
+
