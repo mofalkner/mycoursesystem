@@ -1,4 +1,5 @@
 package at.hakimst;
+
 import dataaccess.MySqlCourseRepository;
 
 import ui.Cli;
@@ -10,13 +11,9 @@ public class Main {
         try {
             Cli myCli = new Cli(new MySqlCourseRepository());
             myCli.start();
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             System.out.println("Datenbankfehler: " + e.getMessage() + " SQL State: " + e.getSQLState());
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             System.out.println("Datenbankfehler: " + e.getMessage());
         }
     }

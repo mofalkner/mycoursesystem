@@ -65,3 +65,6 @@
 - Die Methode findAllCoursesByNameOrDescription wurde implementiert!
 - Es wurde außerdem noch die Methode courseSearch erstellt und auch ausgearbeitet!
 
+### 13. Video:
+- Die Methode findAllRunningCourses wurde ausprogrammiert!
+- Die Methode runningCourses wurde erstellt und ausgearbeitet!

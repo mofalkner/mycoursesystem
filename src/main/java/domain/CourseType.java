@@ -1,6 +1,5 @@
 package domain;
 
-public enum CourseType
-{
+public enum CourseType {
     OE, BF, ZA, FF
 }

@@ -7,30 +7,26 @@ import domain.CourseType;
 import domain.InvalidValueException;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class Cli
-{
+public class Cli {
     Scanner scan;
     MyCourseRepository repo;
 
-    public Cli(MyCourseRepository repo)
-    {
+    public Cli(MyCourseRepository repo) {
         this.scan = new Scanner(System.in);
         this.repo = repo;
     }
 
-    public void start()
-    {
+    public void start() {
         String input = "-";
-        while (!input.equals("x"))
-        {
+        while (!input.equals("x")) {
             showMenue();
             input = scan.nextLine();
-            switch (input)
-            {
+            switch (input) {
                 case "1":
                     addCourse();
                     break;
@@ -49,6 +45,9 @@ public class Cli
                 case "6":
                     courseSearch();
                     break;
+                case "7":
+                    runningCourses();
+                    break;
                 case "x":
                     System.out.println("Auf Wiedersehen!");
                     break;
@@ -60,24 +59,33 @@ public class Cli
         scan.close();
     }
 
-    private void courseSearch()
-    {
+    private void runningCourses() {
+        System.out.println("Aktuell laufende Kurse: ");
+        List<Course> list;
+        try {
+            list = repo.findAllRunningCourses();
+            for (Course course : list) {
+                System.out.println(course);
+            }
+        } catch (DatabaseException databaseException) {
+            System.out.println("Datenbankfehler bei Kurs-Anzeige für laufende Kurse: " + databaseException.getMessage());
+        } catch (Exception exception) {
+            System.out.println("Unbekannter Fehler bei Kurs-Anzeige für laufende Kurse: " + exception.getMessage());
+        }
+    }
+
+    private void courseSearch() {
         System.out.println("Geben Sie einen Suchbegriff an!");
         String searchString = scan.nextLine();
         List<Course> courseList;
-        try
-        {
-            courseList = repo. findAllCoursesByNameOrDescription(searchString);
-            for(Course course : courseList) {
+        try {
+            courseList = repo.findAllCoursesByNameOrDescription(searchString);
+            for (Course course : courseList) {
                 System.out.println(course);
             }
-        }
-        catch(DatabaseException databaseException)
-        {
+        } catch (DatabaseException databaseException) {
             System.out.println("Datenbankfehler bei der Kurssuche: " + databaseException.getMessage());
-        }
-        catch(Exception exception)
-        {
+        } catch (Exception exception) {
             System.out.println("Unbekannter Fehler bei der Kurssuche: " + exception.getMessage());
         }
     }
@@ -153,15 +161,13 @@ public class Cli
         }
     }
 
-    private void addCourse()
-    {
+    private void addCourse() {
         String name, description;
         int hours;
         Date dateFrom, dateTo;
         CourseType courseType;
 
-        try
-        {
+        try {
             System.out.println("Bitte alle Kursdaten angeben:");
             System.out.println("Name: ");
             name = scan.nextLine();
@@ -179,99 +185,69 @@ public class Cli
             courseType = CourseType.valueOf(scan.nextLine());
 
             Optional<Course> optionalCourse = repo.insert(
-                    new Course(name,description,hours,dateFrom,dateTo,courseType)
+                    new Course(name, description, hours, dateFrom, dateTo, courseType)
             );
-            if (optionalCourse.isPresent())
-            {
+            if (optionalCourse.isPresent()) {
                 System.out.println("Kurs angelegt: " + optionalCourse.get());
-            }
-            else
-            {
+            } else {
                 System.out.println("Kurs konnte nicht angelegt werden!");
             }
-        }
-        catch (IllegalArgumentException illegalArgumentException)
-        {
+        } catch (IllegalArgumentException illegalArgumentException) {
             System.out.println("Eingabefehler: " + illegalArgumentException.getMessage());
-        }
-        catch (InvalidValueException invalidValueException)
-        {
+        } catch (InvalidValueException invalidValueException) {
             System.out.println("Kursdaten nicht korrekt angegeben: " + invalidValueException.getMessage());
-        }
-        catch (DatabaseException databaseException)
-        {
+        } catch (DatabaseException databaseException) {
             System.out.println("Datenbankfehler beim Einfügen: " + databaseException.getMessage());
-        }
-        catch (Exception exception)
-        {
+        } catch (Exception exception) {
             System.out.println("Unbekannter Fehler beim Einfügen: " + exception.getMessage());
         }
     }
 
-    private void showCourseDetails()
-    {
+    private void showCourseDetails() {
         System.out.println("Für welchen Kurs möchten Sie die Kursdetails anzeigen?");
         Long courseId = Long.parseLong(scan.nextLine());
-        try
-        {
+        try {
             Optional<Course> courseOptional = repo.getById(courseId);
-            if (courseOptional.isPresent())
-            {
+            if (courseOptional.isPresent()) {
                 System.out.println(courseOptional.get());
-            }
-            else
-            {
+            } else {
                 System.out.println("Kurs mit der ID " + courseId + " nicht gefunden!");
             }
-        }
-        catch (DatabaseException databaseException)
-        {
+        } catch (DatabaseException databaseException) {
             System.out.println("Datenbankfehler bei Kurs-Detailanzeige: " + databaseException.getMessage());
-        }
-        catch (Exception exception)
-        {
+        } catch (Exception exception) {
             System.out.println("Unbekannter Fehler bei Kurs-Detailanzeige: " + exception.getMessage());
         }
     }
 
-    private void showAllCourses()
-    {
+    private void showAllCourses() {
         List<Course> list = null;
 
         try {
             list = repo.getAll();
-            if (list.size()>0)
-            {
-                for (Course course : list)
-                {
+            if (list.size() > 0) {
+                for (Course course : list) {
                     System.out.println(course);
                 }
-            }
-            else
-            {
+            } else {
                 System.out.println("Kursliste leer");
             }
-        }
-        catch (DatabaseException databaseException)
-        {
+        } catch (DatabaseException databaseException) {
             System.out.println("Datenbankfehler bei Anzeige aller Kurse: " + databaseException.getMessage());
-        }
-        catch (Exception exception)
-        {
+        } catch (Exception exception) {
             System.out.println("Unbekannter Fehler bei Anzeige aller Kurse: " + exception.getMessage());
         }
     }
 
-    private void showMenue()
-    {
+    private void showMenue() {
         System.out.println("---------- KURSMANAGEMENT ----------");
         System.out.println("(1) Kurs eingeben! \t (2) Alle Kurse anzeigen! \t" + "(3) Kursdetails anzeigen!");
-        System.out.println("(4) Kursdetails ändern \t (5) Kurs löschen \t" + "(6) Kurssuche");
-        System.out.println("(x) -- ENDE --");
+        System.out.println("(4) Kursdetails ändern! \t (5) Kurs löschen! \t" + "(6) Kurssuche!");
+        System.out.println("(7) Laufende Kurse! \t (-) ---- \t" + "(-) ---- ");
+        System.out.println("(x) --- ENDE ---");
     }
 
-    public void inputError()
-    {
+    public void inputError() {
         System.out.println("Bitte nur die Zahlen der Menüauswahl eingeben!");
     }
 }
