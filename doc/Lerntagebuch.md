@@ -72,3 +72,19 @@
 ### Aufgabe 4:
 - Es wurde die Aufgabe 4 erfolgreich abgeschlossen!
 - Die benötigten Klassen und Interfaces wurden erstellt!
+
+### Aufgabe 5:
+Domänenklasse Buchung:
+
+Attribute: buchungsID, kursID, studentID, buchungsdatum, status
+Methoden: bestätigeBuchung(), storniereBuchung()
+Buchungs-DAO:
+
+Schnittstelle mit CRUD-Operationen (erstelleBuchung(), holeBuchung(), aktualisiereBuchung(), löscheBuchung()).
+CLI-Anpassung:
+
+Neue Befehle: „Buchung erstellen“, „Buchung anzeigen“, „Buchung aktualisieren“, „Buchung stornieren“.
+Anwendungsfälle:
+
+Buchung erstellen: Student wählt Kurs, System prüft Verfügbarkeit und erstellt Buchung.
+Buchung verwalten: Anzeigen/Ändern von Status oder Details.
