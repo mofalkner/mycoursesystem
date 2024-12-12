@@ -43,6 +43,9 @@ public class Cli
                 case "4":
                     updateCourseDetails();
                     break;
+                case "5":
+                    deleteCourse();
+                    break;
                 case "x":
                     System.out.println("Auf Wiedersehen!");
                     break;
@@ -54,20 +57,28 @@ public class Cli
         scan.close();
     }
 
-    private void updateCourseDetails()
-    {
+    private void deleteCourse() {
+        System.out.println("Welchen Kurs mochten Sie löschen? Bitte ID eingeben:");
+        Long courseIdToDelete = Long.parseLong(scan.nextLine());
+
+        try {
+            repo.deleteById(courseIdToDelete);
+        } catch (DatabaseException databaseException) {
+            System.out.println("Datenbankfehler beim Löschen: " + databaseException.getMessage());
+        } catch (Exception e) {
+            System.out.println("Unbekannter Fehler beim Löschen: " + e.getMessage());
+        }
+    }
+
+    private void updateCourseDetails() {
         System.out.println("Für welche Kurs-ID möchten Sie die Kursdetails ändern?");
         Long courseId = Long.parseLong(scan.nextLine());
 
-        try
-        {
+        try {
             Optional<Course> courseOptional = repo.getById(courseId);
-            if (courseOptional.isEmpty())
-            {
+            if (courseOptional.isEmpty()) {
                 System.out.println("Kurs mit der eingegebenen ID nicht in der Datenbank!");
-            }
-            else
-            {
+            } else {
                 Course course = courseOptional.get();
 
                 System.out.println("Änderungen für folgenden Kurs: ");
@@ -93,23 +104,27 @@ public class Cli
                         new Course(
                                 course.getId(),
                                 name.equals("") ? course.getName() : name,
-                                description.equals("") ? course.getDescription() :description,
-                                hours. equals("") ? course.getHours() : Integer.parseInt(hours),
-                                dateFrom.equals("") ? course.getBeginDate():Date.valueOf(dateFrom),
-                                dateTo.equals("")?course.getEndDate(): Date.valueOf(dateTo),
-                                courseType.equals("")?course.getCourseType() : CourseType.valueOf(courseType)
+                                description.equals("") ? course.getDescription() : description,
+                                hours.equals("") ? course.getHours() : Integer.parseInt(hours),
+                                dateFrom.equals("") ? course.getBeginDate() : Date.valueOf(dateFrom),
+                                dateTo.equals("") ? course.getEndDate() : Date.valueOf(dateTo),
+                                courseType.equals("") ? course.getCourseType() : CourseType.valueOf(courseType)
                         )
                 );
 
                 optionalCourseUpdated.ifPresentOrElse(
-                        (c)-> System.out.println("Kurs aktualisiert: " + c),
-                        ()-> System.out.println("Kurs konnte nicht aktualisiert werden!")
+                        (c) -> System.out.println("Kurs aktualisiert: " + c),
+                        () -> System.out.println("Kurs konnte nicht aktualisiert werden!")
                 );
             }
-        }
-        catch (Exception exception)
-        {
-            System.out.println("Unbekannter Fehler bei Kursupdate: " + exception.getMessage());
+        } catch (IllegalArgumentException illegalArgumentException) {
+            System.out.println("Eingabefehler: " + illegalArgumentException.getMessage());
+        } catch (InvalidValueException invalidValueException) {
+            System.out.println("Kursdaten nicht korrekt angegeben: " + invalidValueException.getMessage());
+        } catch (DatabaseException databaseException) {
+            System.out.println("Datenbankfehler beim Einfügen: " + databaseException.getMessage());
+        } catch (Exception exception) {
+            System.out.println("Unbekannter Fehler beim Einfügen: " + exception.getMessage());
         }
     }
 

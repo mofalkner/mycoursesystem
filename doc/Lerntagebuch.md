@@ -55,3 +55,8 @@
 ### 10. Video:
 - Es wurde die Methode upate in MySqlCourseRepository ausgearbeitet!
 - Auch wurde die Methode updateCourseDetails in Cli bearbeitet!
+
+### 11. Video:
+- Die Methode deleteById wurde implementiert!
+- Es wurde die Methode deleteCourse erstellt und gleich ausgearbeitet!
+- Die Methode UpdateCourseDetails wurde aktualisiert!
