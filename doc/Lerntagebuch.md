@@ -68,3 +68,7 @@
 ### 13. Video:
 - Die Methode findAllRunningCourses wurde ausprogrammiert!
 - Die Methode runningCourses wurde erstellt und ausgearbeitet!
+
+### Aufgabe 4:
+- Es wurde die Aufgabe 4 erfolgreich abgeschlossen!
+- Die benötigten Klassen und Interfaces wurden erstellt!

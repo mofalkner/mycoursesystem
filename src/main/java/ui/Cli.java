@@ -2,9 +2,11 @@ package ui;
 
 import dataaccess.DatabaseException;
 import dataaccess.MyCourseRepository;
+import dataaccess.MyStudentRepository;
 import domain.Course;
 import domain.CourseType;
 import domain.InvalidValueException;
+import domain.Student;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -14,56 +16,135 @@ import java.util.Scanner;
 
 public class Cli {
     Scanner scan;
-    MyCourseRepository repo;
+    MyCourseRepository repo1;
+    MyStudentRepository repo2;
 
-    public Cli(MyCourseRepository repo) {
+
+    public Cli(MyCourseRepository repo1, MyStudentRepository repo2) {
         this.scan = new Scanner(System.in);
-        this.repo = repo;
+        this.repo1 = repo1;
+        this.repo2 = repo2;
     }
 
     public void start() {
-        String input = "-";
-        while (!input.equals("x")) {
-            showMenue();
-            input = scan.nextLine();
-            switch (input) {
+        String inputMain = "-";
+        while (!inputMain.equals("x")) {
+            showMainMenue();
+            inputMain = this.scan.nextLine();
+            switch (inputMain) {
                 case "1":
-                    addCourse();
+                    showStudentMenue();
+                    String inputStudents = this.scan.nextLine();
+
+                    switch (inputStudents) {
+                        case "1":
+                            findAllStudentsbyName();
+                            break;
+                        case "2":
+                            findAllStudentsbyBirthyear();
+                            break;
+                        case "3":
+                            findAllStudentsbyId();
+                            break;
+                        case "x":
+                            System.out.println("Auf Wiedersehen");
+                            break;
+                        default:
+                            inputError();
+                            break;
+                    }
                     break;
                 case "2":
-                    showAllCourses();
-                    break;
-                case "3":
-                    showCourseDetails();
-                    break;
-                case "4":
-                    updateCourseDetails();
-                    break;
-                case "5":
-                    deleteCourse();
-                    break;
-                case "6":
-                    courseSearch();
-                    break;
-                case "7":
-                    runningCourses();
-                    break;
-                case "x":
-                    System.out.println("Auf Wiedersehen!");
-                    break;
-                default:
-                    inputError();
+                    showKursMenue();
+                    String inputCourse = this.scan.nextLine();
+                    switch (inputCourse) {
+                        case "1":
+                            addCourse();
+                            break;
+                        case "2":
+                            showAllCourses();
+                            break;
+                        case "3":
+                            showCourseDetails();
+                            break;
+                        case "4":
+                            updateCourseDetails();
+                            break;
+                        case "5":
+                            deleteCourse();
+                            break;
+                        case "6":
+                            courseSearch();
+                            break;
+                        case "7":
+                            runningCourses();
+                            break;
+                        case "x":
+                            System.out.println("Auf Wiedersehen!");
+                            break;
+                        default:
+                            inputError();
+                            break;
+                    }
                     break;
             }
         }
         scan.close();
     }
 
+    private void findAllStudentsbyId() {
+        System.out.println("Geben Sie einen Suchbegriff an!");
+        Long searchLong = Long.parseLong(scan.nextLine());
+        List<Student> studentList;
+        try {
+            studentList = repo2.findAllStudentsbyId(searchLong);
+            for (Student student : studentList) {
+                System.out.println(student);
+            }
+        } catch (DatabaseException databaseException) {
+            System.out.println("Datenbankfehler bei der Kurssuche: " + databaseException.getMessage());
+        } catch (Exception exception) {
+            System.out.println("Unbekannter Fehler bei der Kurssuche: " + exception.getMessage());
+        }
+    }
+
+    private void findAllStudentsbyBirthyear() {
+        System.out.println("Geben Sie einen Suchbegriff an!");
+        String searchString = scan.nextLine();
+        List<Student> studentList;
+        try {
+            studentList = repo2.findAllStudentsbyBirthyear(searchString);
+            for (Student student : studentList) {
+                System.out.println(student);
+            }
+        } catch (DatabaseException databaseException) {
+            System.out.println("Datenbankfehler bei der Kurssuche: " + databaseException.getMessage());
+        } catch (Exception exception) {
+            System.out.println("Unbekannter Fehler bei der Kurssuche: " + exception.getMessage());
+        }
+    }
+
+    private void findAllStudentsbyName() {
+        System.out.println("Geben Sie einen Suchbegriff an!");
+        String searchString = scan.nextLine();
+        List<Student> studentList;
+        try {
+            studentList = repo2.findAllStudentsbyVN(searchString);
+            for (Student student : studentList) {
+                System.out.println(student);
+            }
+        } catch (DatabaseException databaseException) {
+            System.out.println("Datenbankfehler bei der Kurssuche: " + databaseException.getMessage());
+        } catch (Exception exception) {
+            System.out.println("Unbekannter Fehler bei der Kurssuche: " + exception.getMessage());
+        }
+    }
+
     private void runningCourses() {
         System.out.println("Aktuell laufende Kurse: ");
         List<Course> list;
         try {
-            list = repo.findAllRunningCourses();
+            list = repo1.findAllRunningCourses();
             for (Course course : list) {
                 System.out.println(course);
             }
@@ -79,7 +160,7 @@ public class Cli {
         String searchString = scan.nextLine();
         List<Course> courseList;
         try {
-            courseList = repo.findAllCoursesByNameOrDescription(searchString);
+            courseList = repo1.findAllCoursesByNameOrDescription(searchString);
             for (Course course : courseList) {
                 System.out.println(course);
             }
@@ -95,7 +176,7 @@ public class Cli {
         Long courseIdToDelete = Long.parseLong(scan.nextLine());
 
         try {
-            repo.deleteById(courseIdToDelete);
+            repo1.deleteById(courseIdToDelete);
         } catch (DatabaseException databaseException) {
             System.out.println("Datenbankfehler beim Löschen: " + databaseException.getMessage());
         } catch (Exception e) {
@@ -108,7 +189,7 @@ public class Cli {
         Long courseId = Long.parseLong(scan.nextLine());
 
         try {
-            Optional<Course> courseOptional = repo.getById(courseId);
+            Optional<Course> courseOptional = repo1.getById(courseId);
             if (courseOptional.isEmpty()) {
                 System.out.println("Kurs mit der eingegebenen ID nicht in der Datenbank!");
             } else {
@@ -133,7 +214,7 @@ public class Cli {
                 System.out.println("Kurstyp (ZA/BF/FF/OE): ");
                 courseType = scan.nextLine();
 
-                Optional<Course> optionalCourseUpdated = repo.update(
+                Optional<Course> optionalCourseUpdated = repo1.update(
                         new Course(
                                 course.getId(),
                                 name.equals("") ? course.getName() : name,
@@ -184,7 +265,7 @@ public class Cli {
             System.out.println("Kurstyp: (ZA/BF/FF/OE: ");
             courseType = CourseType.valueOf(scan.nextLine());
 
-            Optional<Course> optionalCourse = repo.insert(
+            Optional<Course> optionalCourse = repo1.insert(
                     new Course(name, description, hours, dateFrom, dateTo, courseType)
             );
             if (optionalCourse.isPresent()) {
@@ -207,7 +288,7 @@ public class Cli {
         System.out.println("Für welchen Kurs möchten Sie die Kursdetails anzeigen?");
         Long courseId = Long.parseLong(scan.nextLine());
         try {
-            Optional<Course> courseOptional = repo.getById(courseId);
+            Optional<Course> courseOptional = repo1.getById(courseId);
             if (courseOptional.isPresent()) {
                 System.out.println(courseOptional.get());
             } else {
@@ -224,7 +305,7 @@ public class Cli {
         List<Course> list = null;
 
         try {
-            list = repo.getAll();
+            list = repo1.getAll();
             if (list.size() > 0) {
                 for (Course course : list) {
                     System.out.println(course);
@@ -239,11 +320,23 @@ public class Cli {
         }
     }
 
-    private void showMenue() {
+    private void showKursMenue() {
         System.out.println("---------- KURSMANAGEMENT ----------");
         System.out.println("(1) Kurs eingeben! \t (2) Alle Kurse anzeigen! \t" + "(3) Kursdetails anzeigen!");
         System.out.println("(4) Kursdetails ändern! \t (5) Kurs löschen! \t" + "(6) Kurssuche!");
         System.out.println("(7) Laufende Kurse! \t (-) ---- \t" + "(-) ---- ");
+        System.out.println("(x) --- ENDE ---");
+    }
+
+    private void showStudentMenue() {
+        System.out.println("---------- KURSMANAGEMENT ----------");
+        System.out.println("(1) Nach Name suchen! \t (2) Nach Jahr suchen! \t" + "(3) Nach ID suchen!");
+        System.out.println("(x) --- ENDE ---");
+    }
+
+    private void showMainMenue() {
+        System.out.println("---------- AUSWAHL ----------");
+        System.out.println("(1) Studentenmenü! \t (2) Kursmenü \t");
         System.out.println("(x) --- ENDE ---");
     }
 
