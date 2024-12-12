@@ -51,3 +51,7 @@
 ### 9. Video:
 - In der Klasse MySqlCourseRepository wurde die insert Methode implementiert!
 - Auch die Methode AddCourse in der Klasse Cli wurde ausgearbeitet!
+
+### 10. Video:
+- Es wurde die Methode upate in MySqlCourseRepository ausgearbeitet!
+- Auch wurde die Methode updateCourseDetails in Cli bearbeitet!
